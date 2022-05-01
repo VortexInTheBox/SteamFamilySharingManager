@@ -1,7 +1,20 @@
 from SteamSettings import *
-import requests
+import sys
+import subprocess
 import json
-import vdf
+
+def installPackage(package):
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
+
+try:
+    import requests
+    import vdf
+except ImportError:
+    installPackage("requests")
+    installPackage("vdf")
+finally:
+    import requests
+    import vdf
 
 def userInfo(ids):
     urlUser = f"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/"
